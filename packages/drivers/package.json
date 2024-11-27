@@ -1,0 +1,26 @@
+{
+  "name": "drivers",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "fazzy12 <kaluifeanyi00@gmail.com>",
+  "homepage": "https://github.com/fazzy12/uber-eats-clone#readme",
+  "license": "ISC",
+  "main": "lib/drivers.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fazzy12/uber-eats-clone.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/drivers.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/fazzy12/uber-eats-clone/issues"
+  }
+}
