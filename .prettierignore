@@ -1,0 +1,6 @@
+/packages/*/build/**
+/packages/*/coverage/**
+/node_modules/**
+package-lock.json
+./package.json
+tmp
