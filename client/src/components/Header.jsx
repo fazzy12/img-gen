@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { assets } from "../assets/assets";
 
@@ -25,11 +26,12 @@ function Header() {
             <img
               className="rounded transition-all hover:scale-105 duration-300 cursor-pointer max-sm:w-10"
               key={index}
-              src={assets.sample_img_1}
+              src={index % 2 == 0 ? assets.sample_img_2 : assets.sample_img_1}
               width={70}
             />
           ))}
       </div>
+      <p className="mt-2 text-neutral-600">Generated images from imagify</p>
     </div>
   );
 }
