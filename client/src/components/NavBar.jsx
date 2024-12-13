@@ -5,7 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 function NavBar() {
-  const { user } = useContext(AppContext);
+  const { user, setShowLogin } = useContext(AppContext);
 
   return (
     <div className="flex items-center justify-between py-4">
@@ -44,7 +44,7 @@ function NavBar() {
             <p onClick={() => Navigate("/Buy")} className="cursor-pointer">
               Pricing
             </p>
-            <button className="bg-zinc-800 text-white px-7 py-2 sm:px">
+            <button onClick={()=>setShowLogin(true)} className="bg-zinc-800 text-white px-7 py-2 sm:px">
               login
             </button>
           </div>
