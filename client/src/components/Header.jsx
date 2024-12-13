@@ -1,9 +1,22 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { motion } from "motion/react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const { user, setShowLogin } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const onClickHandler = (e) => {
+    if (user) {
+      navigate("/result");
+    } else {
+      setShowLogin(true);
+    }
+  };
+
   return (
     <motion.div
       className="flex flex-col justify-center items-center text-center my-20"
@@ -41,6 +54,7 @@ function Header() {
         in seconds - just type, and watch the magic happen.
       </motion.p>
       <motion.button
+        onClick={onClickHandler}
         className="sm:text-lg text-white bg-black w-auto mt-8 px-12 py-2.5 flex item-center gap-2 rounded-full"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
