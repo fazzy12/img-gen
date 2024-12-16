@@ -9,7 +9,7 @@ function Header() {
   const { user, setShowLogin } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const onClickHandler = (e) => {
+  const onClickHandler = () => {
     if (user) {
       navigate("/result");
     } else {
@@ -19,7 +19,7 @@ function Header() {
 
   return (
     <motion.div
-      className="flex flex-col justify-center items-center text-center my-20"
+      className="flex flex-col justify-center items-center text-center my-20 h-[70vh]"
       // frammer
       initial={{ opacity: 0.2, y: 100 }}
       transition={{ duration: 1 }}
