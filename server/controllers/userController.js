@@ -29,13 +29,11 @@ const registerUser = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        token,
-        user: { name: user.name, email: user.email },
-      });
+    res.status(201).json({
+      success: true,
+      token,
+      user: { name: user.name, email: user.email },
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, message: "Server error" });
@@ -64,13 +62,27 @@ const loginUser = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        token,
-        user: { name: user.name, email: user.email },
-      });
+    res.status(200).json({
+      success: true,
+      token,
+      user: { name: user.name, email: user.email },
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+const userCredit = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const user = await userModel.findById(userId);
+    res.json({
+      success: true,
+      credit: user.creditBalance,
+      user: { name: user.name },
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, message: "Server error" });
