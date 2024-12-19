@@ -1,5 +1,5 @@
-import userModel from "../models/userModel";
-import FormData from "formdata";
+import userModel from "../models/userModel.js";
+import FormData from "form-data";
 
 export const generateImage = async (req, res) => {
   try {
@@ -46,7 +46,7 @@ export const generateImage = async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Image Generated',
+      message: "Image Generated",
       creditBalance: user.creditBalance - 1,
       image: resultImage,
     });
