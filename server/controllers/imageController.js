@@ -1,5 +1,7 @@
 import userModel from "../models/userModel.js";
 import FormData from "form-data";
+import axios from "axios";
+
 
 export const generateImage = async (req, res) => {
   try {
@@ -9,12 +11,12 @@ export const generateImage = async (req, res) => {
 
     if (!user || !prompt) {
       return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+        .status(400)
+        .json({ success: false, message: "User ID and prompt are required" });
     }
 
     if (user.creditBalance === 0 || userModel.creditBalance < 0) {
-      return res.status(400).json({
+      return res.status(403).json({
         success: false,
         message: "Insufficient credits",
         creditBalance: user.creditBalance,
