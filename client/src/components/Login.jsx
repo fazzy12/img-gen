@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
 import { motion } from "motion/react";
-import axios from 'axios'
+import axios from "axios";
 import { toast } from "react-toastify";
 
 function Login() {
   const [state, setState] = React.useState("Login");
-  const { setShowLogin, backendUrl, setToken, setUser } = useContext(AppContext);
+  const { setShowLogin, backendUrl, setToken, setUser } =
+    useContext(AppContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,22 +16,41 @@ function Login() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      if(state === 'Login'){
-        const {data} =  await axios.post(backendUrl + '/api/user/login', {email, password} )
+      if (state === "Login") {
+        const { data } = await axios.post(backendUrl + "/api/user/login", {
+          email,
+          password,
+        });
 
         if (data.success) {
           setToken(data.token);
           setUser(data.user);
-          localStorage.getItem('token', data.token)
-          setShowLogin(false)
-        }else{
-            // toast
-             toast.error(data.message)
+          localStorage.getItem("token", data.token);
+          setShowLogin(false);
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        const { data } = await axios.post(backendUrl + "/api/user/register", {
+          name,
+          email,
+          password,
+        });
 
+        if (data.success) {
+          setToken(data.token);
+          setUser(data.user);
+          localStorage.getItem("token", data.token);
+          setShowLogin(false);
+        } else {
+          toast.error(data.message);
         }
       }
-    }catch(e){}
-  }
+    } catch (e) {
+      console.error(e);
+      toast.error(e.message);
+    }
+  };
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -43,7 +63,7 @@ function Login() {
   return (
     <div className="top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center fixed">
       <motion.form
-      onSubmit={onSubmitHandler}
+        onSubmit={onSubmitHandler}
         initial={{ opacity: 0.2, y: 50 }}
         transition={{ duration: 0.3 }}
         whileInView={{ opacity: 1, y: 0 }}
