@@ -19,8 +19,8 @@ const registerUser = async (req, res) => {
         .json({ success: false, message: "Email already in use" });
     }
 
-    
-    const salt = await bcrypt.genSalt(60);
+
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new userModel({ name, email, password: hashedPassword });

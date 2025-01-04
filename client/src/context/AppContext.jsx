@@ -9,6 +9,7 @@ import React, {
 import PropTypes from "prop-types";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext();
@@ -19,26 +20,52 @@ const AppContextProvider = (props) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [credit, setCredit] = useState(false);
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL; 
+
+  const navigate = useNavigate()
 
   if (!backendUrl) {
     console.error("Backend URL is not defined in environment variables.");
   }
   const loadCreditData = useCallback(async () => {
     try {
-      const { data } = await axios.get(`${backendUrl}/api/user/credits`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.get(backendUrl + '/api/user/credits', {
+        headers: {token}});
 
       if (data.success) {
-        setCredit(data.credit);
+        setCredit(data.credits);
         setUser(data.user);
       }
     } catch (e) {
-      console.error(e.message);
-      toast.error("Failed to load credit data. Please try again.");
+      console.error(e);
+      toast.error(e.message);
     }
   }, [backendUrl, token]);
+
+
+  const generateImage = useCallback(async (prompt) => {
+    try {
+      const { data } = await axios.post(
+        'backendUrl + /api/images/generate-image', 
+        { prompt }, 
+        { headers: { token } }
+      );
+
+      if (data.success) {
+        loadCreditData();
+        return data.resultImage;
+      } else {
+        toast.error(data.message);
+        loadCreditData();
+        if (data.creditBalance === 0) {
+          navigate('/buy');
+        }
+      }
+    } catch (e) {
+      toast.error(e.message);
+    }
+  }, [loadCreditData, navigate, token]);
+
 
   const logout = () => {
     setToken("");
@@ -68,8 +95,9 @@ const AppContextProvider = (props) => {
       setCredit,
       loadCreditData,
       logout,
+      generateImage,
     }),
-    [user, showLogin, backendUrl, token, credit, loadCreditData]
+    [user, showLogin, backendUrl, token, credit, loadCreditData, generateImage,]
   );
 
   return (

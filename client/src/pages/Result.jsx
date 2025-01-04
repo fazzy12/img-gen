@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { motion } from "motion/react";
+import { AppContext } from "../context/AppContext";
 
 function Result() {
   const [image, setImage] = useState(assets.sample_img_1);
@@ -9,7 +10,21 @@ function Result() {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
 
-  const onSubmitHandler = async () => {};
+  const  {generateIMage} = useContext(AppContext)
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+   if(input){
+     const image = await generateIMage(input);
+     if(!image){
+       setIsImageLoaded(true);
+       setImage(image);
+     }
+    }
+     setLoading(false);
+  };
 
   return (
     <motion.form
