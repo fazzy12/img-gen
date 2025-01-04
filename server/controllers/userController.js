@@ -19,7 +19,7 @@ const registerUser = async (req, res) => {
         .json({ success: false, message: "Email already in use" });
     }
 
-    // Hash the password before saving it to the database.
+    
     const salt = await bcrypt.genSalt(60);
     const hashedPassword = await bcrypt.hash(password, salt);
 
