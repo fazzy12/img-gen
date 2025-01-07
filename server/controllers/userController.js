@@ -100,7 +100,22 @@ const userCredits = async (req, res) => {
 const razorpayInstance = new razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
-  
 });
+
+const paymentRazorpay = async(req, res) => {
+  try{
+    const {userId, planId}  = req.body
+
+    const userData = await userModel.findById(userId)
+
+    if (!userId || !planId){
+      return res.json({ success: false, message: "Missing details" });
+    }
+
+  }catch (e){
+    console.error(e);
+    res.json({ success: false, message: e.message });
+  }
+}
 
 export { registerUser, loginUser, userCredits };
