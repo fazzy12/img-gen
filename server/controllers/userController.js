@@ -104,7 +104,7 @@ const razorpayInstance = new razorpay({
 
 const paymentRazorpay = async(req, res) => {
   try{
-    const {userId, planId}  = req.body
+    const {userId, planId}  = req.bod
 
     const userData = await userModel.findById(userId)
 
